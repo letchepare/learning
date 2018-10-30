@@ -9,7 +9,9 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Liste des notes</ion-title>
+    <ion-title>
+      <ion-searchbar placeholder="Chercher une note" (ionInput)="getItems($event)"></ion-searchbar>
+    </ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="creerNote()">
         <ion-icon name="add-circle"></ion-icon>
@@ -21,7 +23,7 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item ion-note *ngFor="let note of notes" (click)="noteTapped($event, note)">
+    <ion-item tappable ion-note *ngFor="let note of notes" (click)="noteTapped($event, note)">
 
       <h2>{{note.titre}}</h2>
       <p note-end>
