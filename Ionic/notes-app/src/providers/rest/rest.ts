@@ -41,7 +41,7 @@ export class RestProvider {
 
   getNotes(): Observable<any> {
     return this.http.get(this.apiPouchDBNotes + "/_design/allNotes/_view/allNotes");
-  }
+  } 
 
   getNotesParTitre(): Observable<any> {
     return this.http.get(this.apiPouchDBNotes + "/_design/allNotes/_view/allNotesParTitre");
