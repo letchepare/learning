@@ -28,7 +28,7 @@ export class ListeNotesPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public restProvider: RestProvider, public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController) {
-    this.getNotes();
+    this.getNotesParTitre();
     this.pages = [
       { title: 'Home', component: HomePage },
       { title: 'List', component: ListPage },
@@ -38,7 +38,7 @@ export class ListeNotesPage {
 
   presentActionSheet(note) {
     const actionSheet = this.actionSheetCtrl.create({
-      title: 'Note N°' + note.id,
+      title: 'Note N°' + note._id,
       buttons: [
         {
           text: 'Lire la note',
@@ -72,7 +72,7 @@ export class ListeNotesPage {
 
   validerSuppression(note) {
     const confirm = this.alertCtrl.create({
-      title: 'Suppression de la note N°' + note.id,
+      title: 'Suppression de la note N°' + note._id,
       message: 'Êtes-vous certain de vouloir supprimer cette note?',
       buttons: [
         {
@@ -87,11 +87,11 @@ export class ListeNotesPage {
       ]
     });
     confirm.present();
- 
+
   }
 
   private supprimerNote(note: any) {
-    this.restProvider.supprimerNote(note).subscribe(() => this.getNotes());
+    this.restProvider.supprimerNote(note).subscribe(() => this.getNotesParTitre());
   }
 
   private editerNote(note) {
@@ -103,11 +103,25 @@ export class ListeNotesPage {
   }
 
   ionViewWillEnter() {
-    this.getNotes()
+    this.getNotesParTitre()
   }
 
   getNotes() {
-    this.restProvider.getNotes().subscribe((res) => this.notes = this.notesDefault = res);
+    this.restProvider.getNotesParTitre().subscribe((res) => {
+      this.notes = res.rows.map(row => {
+        console.log(row);
+        return row.value;
+      })
+    });
+  }
+
+  getNotesParTitre() {
+    this.restProvider.getNotesParTitre().subscribe((res) => {
+      this.notes = res.rows.map(row => {
+        console.log(row);
+        return row.value;
+      })
+    });
   }
 
   noteTapped(event, note) {
@@ -123,11 +137,11 @@ export class ListeNotesPage {
     this.navCtrl.push(EditNotePage, { 'note': note });
   }
 
-  getItems(event){
+  getItems(event) {
     this.notes = this.notesDefault;
     this.recherche = event.target.value;
 
-    if(this.recherche && this.recherche.trim() != ''){
+    if (this.recherche && this.recherche.trim() != '') {
       this.notes = this.notes.filter((note) => {
         return (note.titre.toLowerCase().indexOf(this.recherche.toLowerCase()) > -1)
       })
