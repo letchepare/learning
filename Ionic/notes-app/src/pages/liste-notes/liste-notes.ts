@@ -21,8 +21,8 @@ import { EditNotePage } from '../edit-note/edit-note';
 })
 export class ListeNotesPage {
   recherche: string = '';
-  notes: any;
-  notesDefault;
+  notes: any[];
+  notesDefault: any[];
   pages: Array<{ title: string, component: any }>;
   rootPage: any = HomePage;
 
@@ -91,7 +91,7 @@ export class ListeNotesPage {
   }
 
   private supprimerNote(note: any) {
-    this.restProvider.supprimerNote(note).subscribe(() => this.getNotesParTitre());
+    this.restProvider.supprimerNote(note).then(() => this.getNotesParTitre());
   }
 
   private editerNote(note) {
@@ -106,21 +106,13 @@ export class ListeNotesPage {
     this.getNotesParTitre()
   }
 
-  getNotes() {
-    this.restProvider.getNotesParTitre().subscribe((res) => {
-      this.notes = res.rows.map(row => {
-        console.log(row);
-        return row.value;
-      })
-    });
-  }
 
   getNotesParTitre() {
-    this.restProvider.getNotesParTitre().subscribe((res) => {
+    this.restProvider.getNotesParTitre().then((res) => {
       this.notes = res.rows.map(row => {
-        console.log(row);
         return row.value;
       })
+      this.notesDefault = this.notes
     });
   }
 

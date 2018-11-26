@@ -31,7 +31,7 @@ export class EditNotePage {
 
   ionViewWillLeave() {
     if(this.note.id==undefined || this.note.id=='')
-      this.rest.creerNote(this.note).subscribe()
+      this.rest.creerNoteSyncAuto(this.note)
     else if(this.note.titre!='' || this.note.content!='')
       this.rest.updateNote(this.note).subscribe();
       

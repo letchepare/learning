@@ -37,6 +37,6 @@ export class DetailNotePage {
 
   supprimerNote(event,note){
     console.log("suppression note")
-    this.rest.supprimerNote(note).subscribe(() => this.navCtrl.setRoot(ListeNotesPage));
+    this.rest.supprimerNote(note).then(() => this.navCtrl.setRoot(ListeNotesPage));
   }
 }
