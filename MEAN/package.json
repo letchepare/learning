@@ -9,7 +9,10 @@
   "author": "letchepare",
   "license": "ISC",
   "dependencies": {
+    "@angular/http": "^7.2.15",
+    "bootstrap": "^4.3.1",
     "express": "^4.17.1",
-    "mongoose": "^5.7.1"
+    "mongoose": "^5.7.1",
+    "ngx-bootstrap": "^5.1.2"
   }
 }

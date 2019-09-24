@@ -4,14 +4,14 @@ const mongoose = require("mongoose");
 const Todo = mongoose.model("Todo");
 const Task = mongoose.model("Task");
 
-router.param("todo", function(req, res, next, id) {
+router.param("todo", function (req, res, next, id) {
   if (!id.match(/^[0-9a-fA-F]{24}$/)) {
     return res.sendStatus(422);
   }
 
   Todo.findById(id)
     .populate("tasks")
-    .then(function(todo) {
+    .then(function (todo) {
       if (!todo) {
         return res.sendStatus(404);
       }
@@ -30,13 +30,17 @@ router.get("/", (req, res) => {
         return res.sendStatus(404);
       }
 
+      
       return res
         .json({
           todos: todos.map(todo => {
             return todo.toDto();
           })
         })
-        .statusCode(200);
+        .statusCode = 200;
+    })
+    .catch(err => {
+      console.error(err);
     });
 });
 
@@ -49,13 +53,15 @@ router.post("/", (req, res) => {
   todo.title = req.body.title;
 
   todo.save().then(() => {
-    res.json(todo.toDto()).statusCode(201);
+    res.json(todo.toDto()).statusCode = 201;
   });
 });
 
 router.delete('/:todo', (req, res) => {
- 
-    req.todo.remove().then(function () {
-        return res.sendStatus(200);
-    });
- });
+
+  req.todo.remove().then(function () {
+    return res.sendStatus(200);
+  });
+});
+
+module.exports = router;
