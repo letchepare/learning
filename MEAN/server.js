@@ -9,17 +9,18 @@ require("./server/models/Task");
 require("./server/models/Todo");
 
 // Connect to mongoDB server
-mongoose.connect("mongodb://localhost/todoApp", { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect("mongodb://localhost/todoApp", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 mongoose.set("debug", true);
-mongoose.set('useCreateIndex', true);
-
-
+mongoose.set("useCreateIndex", true);
 
 // Init express
 const app = express();
 
 // Enable CORS
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
   res.header(
@@ -28,13 +29,6 @@ app.use(function (req, res, next) {
   );
   next();
 });
-//Static path to dist
-// app.use(express.static(path.join(__dirname, 'todo-app/dist')));
-
-//Catch all other routes and return to the index file
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'todo-app/dist/index.html'));
-// })
 
 // Enable bodyParser
 app.use(bodyParser.json());
@@ -44,6 +38,13 @@ const api = require("./server/api/");
 //Set API routes
 app.use("/api", api);
 
+//Static path to dist
+app.use(express.static(path.join(__dirname, "todo-app/dist/todo-app")));
+
+//Catch all other routes and return to the index file
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "todo-app/dist/todo-app/index.html"));
+});
 
 // Get environment port or use 3000
 const port = process.env.PORT || "3000";
@@ -54,5 +55,3 @@ const server = http.createServer(app);
 
 // Listen on port
 server.listen(port, () => console.log(`API running on localhost:${port}`));
-
-
