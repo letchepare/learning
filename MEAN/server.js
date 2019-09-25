@@ -29,12 +29,12 @@ app.use(function (req, res, next) {
   next();
 });
 //Static path to dist
-app.use(express.static(path.join(__dirname, 'todo-app/dist')));
+// app.use(express.static(path.join(__dirname, 'todo-app/dist')));
 
 //Catch all other routes and return to the index file
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'todo-app/dist/index.html'));
-})
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'todo-app/dist/index.html'));
+// })
 
 // Enable bodyParser
 app.use(bodyParser.json());
