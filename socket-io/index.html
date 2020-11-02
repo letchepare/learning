@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Socket.IO chat</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <ul id="messages"></ul>
+    <form action="">
+        <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+        $(function () {
+            var socket = io();
+            var pseudo = '';
+            while (pseudo == '') {
+                pseudo = prompt('choisissez un pseudo');
+            }
+            socket.emit('connected',pseudo)
+            var cacheData = {
+                userName: pseudo,
+                message: ''
+            }
+            $('form').submit(function (e) {
+                e.preventDefault(); // prevents page reloading
+                cacheData.message = $('#m').val();
+                socket.emit('chat message', cacheData);
+                $('#m').val('');
+                return false;
+            });
+            socket.on('chat message', function (msg) {
+                var classToAppend = msg.userName == cacheData.userName ? 'message-from-local-user' : 'message-from-remote-user';
+                $('#messages').append($("<li>").html(`<span class=${classToAppend}> ${msg.userName}: </span> ${msg.message}`));
+            });
+        });
+    </script>
+</body>
+
+</html>
