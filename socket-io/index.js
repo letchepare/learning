@@ -37,7 +37,12 @@ io.on('connection', (socket) => {
 app.use('/static', express.static(__dirname + '/assets'));
 
 
-http.listen(3000, () => {
+http.listen(3000, 'chat.lilian-etchepare.com', () => {
+    console.log('listening on *:3000');
+});
+
+
+http.listen(3000, 'localhost', () => {
     console.log('listening on *:3000');
 });
 
