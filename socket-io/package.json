@@ -21,7 +21,7 @@
   "homepage": "https://github.com/letchepare/learning#readme",
   "dependencies": {
     "express": "^4.15.2",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.4.0"
   },
   "devDependencies": {
     "@vercel/node": "^1.8.4"
