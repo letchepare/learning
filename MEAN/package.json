@@ -11,7 +11,7 @@
   "dependencies": {
     "@angular/http": "^7.2.15",
     "bootstrap": "^4.3.1",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "mongoose": "^5.7.5",
     "ngx-bootstrap": "^5.1.2"
   }
